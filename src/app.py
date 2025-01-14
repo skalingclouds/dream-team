@@ -26,7 +26,7 @@ cancel_event = asyncio.Event()
 MAGENTIC_ONE_DEFAULT_AGENTS = [
             {
             "input_key":"0001",
-            "type":"Apex",
+            "type":"MagenticOne",
             "name":"Coder",
             "system_message":"",
             "description":"",
@@ -34,7 +34,7 @@ MAGENTIC_ONE_DEFAULT_AGENTS = [
             },
             {
             "input_key":"0002",
-            "type":"Apex",
+            "type":"MagenticOne",
             "name":"Executor",
             "system_message":"",
             "description":"",
@@ -42,7 +42,7 @@ MAGENTIC_ONE_DEFAULT_AGENTS = [
             },
             {
             "input_key":"0003",
-            "type":"Apex",
+            "type":"MagenticOne",
             "name":"FileSurfer",
             "system_message":"",
             "description":"",
@@ -50,7 +50,7 @@ MAGENTIC_ONE_DEFAULT_AGENTS = [
             },
             {
             "input_key":"0004",
-            "type":"Apex",
+            "type":"MagenticOne",
             "name":"WebSurfer",
             "system_message":"",
             "description":"",
@@ -89,7 +89,7 @@ if 'save_screenshots' not in st.session_state:
     st.session_state.save_screenshots = True
 
 st.set_page_config(layout="wide")
-st.write("### Apex Class Action Agents")
+st.write("### Dream Team powered by Magentic 1")
 
 
 @st.dialog("Add agent")
@@ -156,12 +156,12 @@ def edit_agent(input_key = None):
     # agent_name = st.text_input("Name", value=None)
     # system_message = st.text_area("System Message", value=None)
     # description = st.text_area("Description", value=None)
-    if agent["type"] == "Apex":
+    if agent["type"] == "MagenticOne":
         disabled = True
-        st.info("Apex agents cannot be edited. Only deleted.")
+        st.info("MagenticOne agents cannot be edited. Only deleted.")
     else:
         disabled = False
-    agent_type = "Apex"
+    agent_type = "Custom"
     agent_name = st.text_input("Name", key=f"name{input_key}", value=agent["name"] if agent else None, disabled=disabled)
     system_message = st.text_area("System Message", key=f"sys{input_key}", value=agent["system_message"] if agent else None, disabled=disabled)
     description = st.text_area("Description", key=f"desc{input_key}", value=agent["description"] if agent else None, disabled=disabled)
@@ -194,7 +194,7 @@ def delete_agent(input_key = None):
                 st.rerun()
     
 
-image_path = "apex.webp"  
+image_path = "contoso.png"  
   
 # Display the image in the sidebar  
 with st.sidebar:
@@ -240,7 +240,7 @@ if not st.session_state['running']:
         # with cols[-1]:
         col1, col2, col3 = st.columns([3,1,1])
         with col1:
-            if st.button("Restore Apex Agents", icon="🔄"):
+            if st.button("Restore MagenticOne agents", icon="🔄"):
                 st.session_state.saved_agents = MAGENTIC_ONE_DEFAULT_AGENTS
                 st.rerun()
         with col3:
@@ -312,7 +312,7 @@ if st.button(run_button_text, type="primary"):
 def get_current_time():
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 def get_agent_icon(agent_name) -> str:
-    if agent_name == "ApexOrchestrator":
+    if agent_name == "MagenticOneOrchestrator":
         agent_icon = "🎻"
     elif agent_name == "WebSurfer":
         agent_icon = "🏄‍♂️"
@@ -349,7 +349,7 @@ def display_log_message(log_entry, logs_dir):
     elif isinstance(_log_entry_json, MultiModalMessage):
         # message type, e.g.: TextMessage,'MultiModalMessage'
         _type = _log_entry_json.type
-        # source of the message, e.g.: user, ApexOrchestrator,'WebSurfer','Coder'
+        # source of the message, e.g.: user, MagenticOneOrchestrator,'WebSurfer','Coder'
         _source = _log_entry_json.source
         # actual message content - if multimodal it will be list of contents, one of them is autogen_core._image.Image object where data_uri is base64 encoded image, image is PIL image
         _content = _log_entry_json.content
@@ -364,7 +364,7 @@ def display_log_message(log_entry, logs_dir):
     elif isinstance(_log_entry_json, TextMessage):
         # message type, e.g.: TextMessage,'MultiModalMessage'
         _type = _log_entry_json.type
-        # source of the message, e.g.: user, ApexOrchestrator,'WebSurfer','Coder'
+        # source of the message, e.g.: user, MagenticOneOrchestrator,'WebSurfer','Coder'
         _source = _log_entry_json.source
         # actual message content - if multimodal it will be list of contents, one of them is autogen_core._image.Image object where data_uri is base64 encoded image, image is PIL image
         _content = _log_entry_json.content
@@ -377,7 +377,7 @@ def display_log_message(log_entry, logs_dir):
     elif isinstance(_log_entry_json, ToolCallExecutionEvent):
         # message type, ToolCallRequestEvent, ToolCallExecutionEvent
         _type = _log_entry_json.type
-        # source of the message, e.g.: user, ApexOrchestrator,'WebSurfer','Coder'
+        # source of the message, e.g.: user, MagenticOneOrchestrator,'WebSurfer','Coder'
         _source = _log_entry_json.source
         # actual message content - if multimodal it will be list of contents, one of them is autogen_core._image.Image object where data_uri is base64 encoded image, image is PIL image
         _content = _log_entry_json.content
@@ -391,7 +391,7 @@ def display_log_message(log_entry, logs_dir):
     elif isinstance(_log_entry_json, ToolCallRequestEvent):
         # message type, ToolCallRequestEvent, ToolCallExecutionEvent
         _type = _log_entry_json.type
-        # source of the message, e.g.: user, ApexOrchestrator,'WebSurfer','Coder'
+        # source of the message, e.g.: user, MagenticOneOrchestrator,'WebSurfer','Coder'
         _source = _log_entry_json.source
         # actual message content - if multimodal it will be list of contents, one of them is autogen_core._image.Image object where data_uri is base64 encoded image, image is PIL image
         _content = _log_entry_json.content
@@ -412,11 +412,11 @@ async def main(task, logs_dir="./logs"):
         os.makedirs(logs_dir)
 
 
-    # Initialize the Apex system
+    # Initialize the MagenticOne system
     magentic_one = MagenticOneHelper(logs_dir=logs_dir, save_screenshots=st.session_state.save_screenshots, run_locally=st.session_state["run_mode_locally"])
     await magentic_one.initialize(agents=st.session_state.saved_agents)
 
-    # Start the Apex system
+    # Start the MagenticOne system
 
     stream = magentic_one.main(task = task)
    
@@ -430,7 +430,7 @@ async def main(task, logs_dir="./logs"):
 if st.session_state['running']:
     assert st.session_state['instructions'] != "", "Instructions can't be empty."
 
-    with st.spinner("Apex Agents are running..."):
+    with st.spinner("Dream Team is running..."):
         asyncio.run(main(st.session_state['instructions']))
 
     final_answer = st.session_state["final_answer"]
